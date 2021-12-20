@@ -12,7 +12,14 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class NewsListViewModelMock: NewsListViewModel() {
+class NewsListViewModelMock: NewsListViewModel {
+    override val news: MutableLiveData<List<News>>
+        get() = TODO("Not yet implemented")
+    override val isLoading: MutableLiveData<Boolean>
+        get() = TODO("Not yet implemented")
+    override val symbol: String
+        get() = TODO("Not yet implemented")
     override val navigationManager: NavigationManager
-        get() = NavigationManager()
+        get() = TODO("Not yet implemented")
+
 }

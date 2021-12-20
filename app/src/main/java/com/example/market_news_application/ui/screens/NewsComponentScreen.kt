@@ -20,6 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.example.domain.news.model.News
+import com.example.market_news_application.core.navigation.NavigationCommandFactory
 import com.example.market_news_application.core.ui.CircularIndeterminateProgressBar
 import com.example.market_news_application.news.viewmodel.componentscreen.NewsComponentViewModel
 import com.example.market_news_application.news.viewmodel.listscreen.NewsListViewModel
@@ -71,8 +72,7 @@ class NewsComponentScreen(
 
         FloatingActionButton(
             onClick = {
-                newsComponentViewModel.clearNews()
-
+                newsComponentViewModel.navigationManager.navigate(NavigationCommandFactory.provideToNewsListNavigation())
             },
             backgroundColor = Color.White,
             contentColor = Color.Black,

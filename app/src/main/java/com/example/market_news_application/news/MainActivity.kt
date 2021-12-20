@@ -1,6 +1,7 @@
 package com.example.market_news_application.news
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.*
@@ -28,11 +29,14 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
             navigationManager.commands.collectAsState().value.also { navigationCommand ->
+                Log.d("Navigation", "command changed")
+
                 if (navigationCommand.destination.isNotEmpty())
                     try {
                         navController.navigate(navigationCommand.destination)
                     } catch(e: NullPointerException){
                         println(e.message)
+                        Log.d("Navigation", "Nullpointer with: ${navigationCommand.destination}")
                     }
             }
 

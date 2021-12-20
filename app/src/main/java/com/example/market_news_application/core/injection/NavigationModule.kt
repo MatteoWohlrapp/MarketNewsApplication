@@ -13,5 +13,6 @@ import javax.inject.Singleton
 object NavigationModule {
 
     @Provides
+    @Singleton
     fun provideNavigationManager() = NavigationManager()
 }

@@ -20,7 +20,11 @@ class NewsListViewModelImpl @Inject constructor(
     private val refreshNewsUseCase: RefreshNewsUseCase,
     private val loadMoreNewsUseCase: LoadMoreNewsUseCase,
     override val navigationManager: NavigationManager
-) : NewsListViewModel() {
+) : NewsListViewModel, ViewModel() {
+
+    override val news = MutableLiveData<List<News>>(listOf())
+    override val isLoading = MutableLiveData(false)
+    override val symbol = "AAPL"
 
     override fun updateTicker(symbol: String) {
         ViewModelUtil.suspendFunction(viewModelScope) {

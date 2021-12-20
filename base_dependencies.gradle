@@ -1,0 +1,248 @@
+ext {
+    //Android
+    androidBuildToolsVersion = "31.0.0"
+    androidMinSdkVersion = 21
+    androidTargetSdkVersion = 30
+    androidCompileSdkVersion = 30
+
+    //Libraries
+
+    //Kotlin
+    kotlinVersion = '1.5.31'
+    kotlinCoroutinesVersion = "1.5.2"
+    composeVersion = '1.0.5'
+    composeActivityVersion = '1.4.0'
+
+    //Networking
+    okHttpVersion = '5.0.0-alpha.2'
+    retrofitVersion = '2.9.0'
+    moshiVersion = '1.12.0'
+    glideVersion = '4.12.0'
+    coilVersion = '1.3.2'
+
+    //android libraries
+    desugarVersion = '1.1.5'
+    androidActivityVersion = '1.3.0'
+    androidAnnotationVersion = '1.2.0'
+    appCompatVersion = '1.4.0-alpha03'
+    archVersion = '2.1.0'
+    coreKtxVersion = '1.6.0'
+    androidFragmentVersion = '1.4.0-alpha05'
+    hiltVersion = '1.0.0'
+    lifecycleVersion = '2.4.0-alpha02'
+    lifecycleExtensionsVersion = '2.4.0-alpha02'
+    mediaVersion = '1.4.0-rc01'
+    navigationVersion = '2.4.0-alpha05'
+    hiltNavigationVersion = '1.0.0-beta01'
+    recyclerViewVersion = '1.2.1'
+    roomVersion = '2.3.0'
+    viewPagerVersion = '1.1.0-alpha01'
+    workVersion = '2.5.0'
+
+    constraintLayoutVersion = '2.1.0-rc01'
+    pagingVersion = '2.1.2'
+    materialVersion = '1.5.0-alpha01'
+    swipeRefreshVersion = '1.2.0-alpha01'
+
+    materialDialogsVersion = '3.3.0'
+    timberVersion = '4.7.1'
+    daggerVersion = '2.38.1'
+    leakCanaryVersion = '2.7'
+    rtfVersion = '0.1.11'
+    youtubeVersion = '10.0.5'
+    accompanistVersion = '0.21.3-beta'
+
+    appCompatDependencies = [
+            appCompat: "androidx.appcompat:appcompat:${appCompatVersion}"
+    ]
+
+    composeDependencies = [
+            composeUi: "androidx.compose.ui:ui:${composeVersion}",
+            composeMaterial: "androidx.compose.material:material:${composeVersion}",
+            composeTooling: "androidx.compose.ui:ui-tooling-preview:${composeVersion}",
+            composeLiveData: "androidx.compose.runtime:runtime-livedata:${composeVersion}",
+            composeActivity: "androidx.activity:activity-compose:${composeActivityVersion}",
+            composeFoundation: "androidx.compose.foundation:foundation:${composeVersion}",
+            composeIcons:  "androidx.compose.material:material-icons-core:${composeVersion}",
+            composeIconsExtended: "androidx.compose.material:material-icons-extended:${composeVersion}"
+    ]
+
+    composeDebugDependencies = [
+            debugComposeTooling: "androidx.compose.ui:ui-tooling:${composeVersion}"
+    ]
+
+    roomDependencies = [
+            roomRuntime   : "androidx.room:room-runtime:${roomVersion}",
+            roomCoroutines: "androidx.room:room-ktx:${roomVersion}"
+    ]
+
+    materialDialogsDependencies = [
+            materialDialogsCore    : "com.afollestad.material-dialogs:core:${materialDialogsVersion}",
+            mateiralDialogsDateTime: "com.afollestad.material-dialogs:datetime:${materialDialogsVersion}"
+    ]
+
+    roomCompile = [
+            roomCompiler: "androidx.room:room-compiler:${roomVersion}",
+    ]
+
+    kotlinDependencies = [
+            kotlin       : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}",
+            kotlinReflect: "org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}"
+    ]
+
+    kotlinCoroutineDependencies = [
+            kotlinCoroutinesCore: "org.jetbrains.kotlinx:kotlinx-coroutines-core:${kotlinCoroutinesVersion}"
+    ]
+
+    kotlinCoroutineAndroidDependencies = [
+            kotlinCoroutinesAndroid: "org.jetbrains.kotlinx:kotlinx-coroutines-android:${kotlinCoroutinesVersion}"
+    ]
+
+    archDependencies = [
+            lifecycleRuntime: "androidx.lifecycle:lifecycle-runtime:${lifecycleVersion}",
+            lifecycleKtx    : "androidx.lifecycle:lifecycle-runtime-ktx:${lifecycleVersion}",
+            archRuntime     : "androidx.arch.core:core-runtime:$archVersion",
+    ]
+
+    archProcessing = [
+            archCompiler: "androidx.lifecycle:lifecycle-compiler:${lifecycleVersion}",
+    ]
+
+    desugarDependencies = [
+            desugar: "com.android.tools:desugar_jdk_libs:${desugarVersion}"
+    ]
+
+    liveDataDependencies = [
+            liveData    : "androidx.lifecycle:lifecycle-livedata:${lifecycleVersion}",
+            liveDataCore: "androidx.lifecycle:lifecycle-livedata-core:${lifecycleVersion}",
+            liveDataKtx : "androidx.lifecycle:lifecycle-livedata-ktx:${lifecycleVersion}"
+    ]
+
+    navigationDependencies = [
+            navigationFragment: "androidx.navigation:navigation-fragment-ktx:${navigationVersion}",
+            navigationUi      : "androidx.navigation:navigation-ui-ktx:${navigationVersion}",
+            navigationCompose: "androidx.navigation:navigation-compose:${navigationVersion}",
+            navigationHilt:  "androidx.hilt:hilt-navigation-compose:${hiltNavigationVersion}"
+    ]
+
+    viewModelDependencies = [
+            viewModel   : "androidx.lifecycle:lifecycle-viewmodel:${lifecycleVersion}",
+            viewModelKtx: "androidx.lifecycle:lifecycle-viewmodel-ktx:${lifecycleVersion}"
+    ]
+
+    pagingDependencies = [
+            runtime: "androidx.paging:paging-runtime:${pagingVersion}",
+            common : "androidx.paging:paging-common:${pagingVersion}",
+    ]
+
+    workDependencies = [
+            workKtx: "androidx.work:work-runtime-ktx:${workVersion}",
+    ]
+
+    okHttpDependencies = [
+            okHttp      : "com.squareup.okhttp3:okhttp:${okHttpVersion}",
+            okHttpLogger: "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}"
+    ]
+
+
+    retrofitDependencies = [
+            retrofit         : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
+            retrofitConverter: "com.squareup.retrofit2:converter-moshi:${retrofitVersion}"
+    ]
+
+    hiltDependencies = [
+            hilt: "com.google.dagger:hilt-android:${daggerVersion}"
+    ]
+
+    hiltProcessing = [
+            hiltCompiler: "com.google.dagger:hilt-compiler:${daggerVersion}"
+    ]
+
+    daggerProcessing = [
+            daggerCompiler: "com.google.dagger:dagger-compiler:${daggerVersion}",
+    ]
+
+    daggerDependencies = [
+            dagger: "com.google.dagger:dagger:${daggerVersion}",
+    ]
+
+    daggerAndroidDependencies = [
+            daggerAndroid: "com.google.dagger:dagger-android:${daggerVersion}",
+            daggerSupport: "com.google.dagger:dagger-android-support:${daggerVersion}"
+    ]
+
+    daggerAndroidProcessing = [
+            daggerProcessor: "com.google.dagger:dagger-android-processor:${daggerVersion}"
+    ]
+
+    supportDependencies = [
+            supportRecyclerView: "androidx.recyclerview:recyclerview:${recyclerViewVersion}",
+            supportDesign      : "com.google.android.material:material:${materialVersion}",
+            constraintLayout   : "androidx.constraintlayout:constraintlayout:${constraintLayoutVersion}",
+            ktx                : "androidx.core:core-ktx:${coreKtxVersion}",
+            viewPager          : "androidx.viewpager2:viewpager2:${viewPagerVersion}"
+    ]
+
+    swipeRefreshDependencies = [
+            swipeRefresh: "androidx.swiperefreshlayout:swiperefreshlayout:${swipeRefreshVersion}"
+    ]
+
+    fragmentDependencies = [
+            fragment   : "androidx.fragment:fragment:${androidFragmentVersion}",
+            fragmentKtx: "androidx.fragment:fragment-ktx:${androidFragmentVersion}"
+    ]
+
+    activityDependencies = [
+            activity   : "androidx.activity:activity:${androidActivityVersion}",
+            activityKtx: "androidx.activity:activity-ktx:${androidActivityVersion}"
+    ]
+
+    annotationDependencies = [
+            annotation: "androidx.annotation:annotation:${androidAnnotationVersion}",
+    ]
+
+    mediaDependencies = [
+            media      : "androidx.media2:media2:${mediaVersion}",
+            mediaWidget: "androidx.media2:media2-widget:${mediaVersion}",
+    ]
+
+    glideDependencies = [
+            glide          : "com.github.bumptech.glide:glide:${glideVersion}",
+            glideCompiler  : "com.github.bumptech.glide:compiler:${glideVersion}",
+            glideAnnotation: "com.github.bumptech.glide:annotations:${glideVersion}"
+    ]
+
+    coilDependencies = [
+            coil: "io.coil-kt:coil-compose:${coilVersion}"
+    ]
+
+
+    timberDependencies = [
+            timber: "com.jakewharton.timber:timber:${timberVersion}"
+    ]
+
+    moshiDependencies = [
+            moshiKotlin: "com.squareup.moshi:moshi-kotlin:${moshiVersion}"
+    ]
+
+    moshiCodeGenerationDependencies = [
+            moshiCodeGen: "com.squareup.moshi:moshi-kotlin-codegen:${moshiVersion}"
+    ]
+
+    leakCanaryDependencies = [
+            leakCanary: "com.squareup.leakcanary:leakcanary-android:${leakCanaryVersion}",
+    ]
+
+    rtfDependencies = [
+            rtf: "com.github.Hanako-Health:RTFView-Android:${rtfVersion}"
+    ]
+
+    youtubeDependencies = [
+            youtube: "com.pierfrancescosoffritti.androidyoutubeplayer:core:${youtubeVersion}"
+    ]
+
+    accompanistDependencies = [
+            accompanist: "com.google.accompanist:accompanist-swiperefresh:${accompanistVersion}"
+    ]
+
+}

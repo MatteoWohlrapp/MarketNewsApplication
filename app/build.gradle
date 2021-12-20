@@ -1,0 +1,104 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    compileSdk 31
+
+    defaultConfig {
+        applicationId "com.example.market_news_application"
+        minSdk 21
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+        useIR = true
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+        kotlinCompilerVersion '1.5.21'
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+
+dependencies {
+    implementation project(':domain')
+    implementation project(':data')
+
+
+    implementation supportDependencies.values()
+    implementation appCompatDependencies.values()
+    implementation navigationDependencies.values()
+
+
+    implementation composeDependencies.values()
+    debugImplementation composeDebugDependencies.values()
+
+    implementation archDependencies.values()
+
+    implementation swipeRefreshDependencies.values()
+
+    implementation coilDependencies.values()
+
+    implementation retrofitDependencies.values()
+
+    implementation okHttpDependencies.values()
+
+    implementation moshiDependencies.values()
+    implementation moshiCodeGenerationDependencies.values()
+
+    implementation kotlinCoroutineDependencies.values()
+
+    // room
+    kapt roomCompile.values()
+    implementation roomDependencies.values()
+
+    // dagger, hilt
+    implementation hiltDependencies.values()
+    kapt hiltProcessing.values()
+    kapt daggerAndroidProcessing.values()
+    implementation daggerAndroidDependencies.values()
+    implementation daggerDependencies.values()
+
+    // swipe refresh
+    implementation accompanistDependencies.values()
+
+    androidTestImplementation "org.mockito.kotlin:mockito-kotlin:3.2.0"
+    androidTestImplementation "org.mockito:mockito-android:3.2.0"
+
+
+    androidTestImplementation "androidx.test:runner:1.4.0"
+    androidTestImplementation "androidx.test:core:1.4.0"
+    androidTestImplementation "androidx.test:rules:1.4.0"
+
+    testImplementation 'junit:junit:4.12'
+
+}

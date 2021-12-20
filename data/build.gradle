@@ -1,0 +1,37 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id("dagger.hilt.android.plugin")
+}
+
+android{
+    compileSdk 31
+}
+
+dependencies {
+    implementation project(':domain')
+
+    implementation supportDependencies.values()
+    implementation appCompatDependencies.values()
+
+    implementation retrofitDependencies.values()
+
+    implementation okHttpDependencies.values()
+
+    implementation moshiDependencies.values()
+    implementation moshiCodeGenerationDependencies.values()
+
+    implementation kotlinCoroutineDependencies.values()
+
+    // room
+    kapt roomCompile.values()
+    implementation roomDependencies.values()
+
+    // dagger, hilt
+    implementation hiltDependencies.values()
+    kapt hiltProcessing.values()
+    kapt daggerAndroidProcessing.values()
+    implementation daggerAndroidDependencies.values()
+    implementation daggerDependencies.values()
+}

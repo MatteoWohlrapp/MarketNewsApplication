@@ -28,10 +28,8 @@ class NewsRepositoryImpl @Inject constructor(
 
     @RequiresApi(Build.VERSION_CODES.CUPCAKE)
     override suspend fun loadNews(symbol: String, from: Long, to: Long) {
-
         val fromString = DateUtil.mapTimestampToDate(from)
         val toString = DateUtil.mapTimestampToDate(to)
-
         val newsLocal = newsService.fetchCompanyNews(symbol, fromString, toString, token).
                 mapToNewsLocal()
 

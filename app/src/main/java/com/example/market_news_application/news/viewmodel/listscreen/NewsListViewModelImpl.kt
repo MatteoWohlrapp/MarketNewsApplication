@@ -25,11 +25,12 @@ class NewsListViewModelImpl @Inject constructor(
 
     override val news = MutableLiveData<List<News>>(listOf())
     override val isLoading = MutableLiveData(false)
-    override val symbol = "AAPL"
+    override var symbol = "AAPL"
 
     override fun updateTicker(symbol: String) {
         ViewModelUtil.suspendFunction(viewModelScope) {
             observeNewsUseCase.updateSymbol(symbol)
+            this.symbol = symbol
             refresh()
         }
     }

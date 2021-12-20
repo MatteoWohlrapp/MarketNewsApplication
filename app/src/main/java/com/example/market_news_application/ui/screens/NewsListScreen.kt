@@ -28,6 +28,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -36,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.data.news.DateUtil
 import com.example.domain.news.model.News
+import com.example.market_news_application.R
 import com.example.market_news_application.core.navigation.NavigationCommandFactory
 import com.example.market_news_application.core.ui.CircularIndeterminateProgressBar
 import com.example.market_news_application.news.viewmodel.listscreen.NewsListViewModel
@@ -218,15 +220,27 @@ fun NewsComponent(news: News, newsListViewModel: NewsListViewModel) {
 
 @Composable
 fun NewsListImage(url: String) {
-    Image(
-        painter = rememberImagePainter(url),
-        contentDescription = null,
-        contentScale = ContentScale.Crop,
-        modifier = Modifier
-            .padding(8.dp)
-            .size(120.dp)
-            .clip(RoundedCornerShape(corner = CornerSize(16.dp)))
-    )
+    if(url != "") {
+        Image(
+            painter = rememberImagePainter(url),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .padding(8.dp)
+                .size(120.dp)
+                .clip(RoundedCornerShape(corner = CornerSize(16.dp)))
+        )
+    } else {
+        Image(
+            painter = painterResource(id = R.drawable.breaking_news),
+            contentDescription = null,
+            contentScale = ContentScale.FillWidth,
+            modifier = Modifier
+                .padding(8.dp)
+                .size(120.dp)
+                .clip(RoundedCornerShape(corner = CornerSize(16.dp)))
+        )
+    }
 }
 
 @Composable

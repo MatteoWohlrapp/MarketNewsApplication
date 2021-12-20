@@ -13,6 +13,7 @@ import com.example.market_news_application.news.viewmodel.ViewModelUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
+import javax.inject.Singleton
 
 @HiltViewModel
 class NewsListViewModelImpl @Inject constructor(

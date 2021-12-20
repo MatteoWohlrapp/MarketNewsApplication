@@ -22,4 +22,20 @@ class NewsListViewModelMock: NewsListViewModel {
     override val navigationManager: NavigationManager
         get() = TODO("Not yet implemented")
 
+    override fun updateTicker(symbol: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getNews() {
+        TODO("Not yet implemented")
+    }
+
+    override fun refresh() {
+        TODO("Not yet implemented")
+    }
+
+    override fun loadMore() {
+        TODO("Not yet implemented")
+    }
+
 }

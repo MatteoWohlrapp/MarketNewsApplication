@@ -1,5 +1,6 @@
 package com.example.market_news_application.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -15,9 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.domain.news.model.News
+import com.example.market_news_application.R
 import com.example.market_news_application.core.navigation.NavigationCommandFactory
 import com.example.market_news_application.core.ui.CircularIndeterminateProgressBar
 import com.example.market_news_application.news.viewmodel.componentscreen.NewsComponentViewModel
@@ -53,14 +56,26 @@ fun NewsComponentScreen(
 
 @Composable
 fun NewsComponentImage(url: String) {
-    Image(
-        painter = rememberImagePainter(url),
-        contentDescription = null,
-        contentScale = ContentScale.FillWidth,
-        modifier = Modifier
-            .padding(8.dp)
-            .clip(RoundedCornerShape(corner = CornerSize(16.dp)))
-    )
+    if(url != "") {
+        Image(
+            painter = rememberImagePainter(url),
+            contentDescription = null,
+            contentScale = ContentScale.FillWidth,
+            modifier = Modifier
+                .padding(8.dp)
+                .clip(RoundedCornerShape(corner = CornerSize(16.dp)))
+        )
+    } else {
+        Image(
+            painter = painterResource(id = R.drawable.breaking_news),
+            contentDescription = null,
+            contentScale = ContentScale.FillWidth,
+            modifier = Modifier
+                .padding(8.dp)
+                .size(120.dp)
+                .clip(RoundedCornerShape(corner = CornerSize(16.dp)))
+        )
+    }
 }
 
 @Composable

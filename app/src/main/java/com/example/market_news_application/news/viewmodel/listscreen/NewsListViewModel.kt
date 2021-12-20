@@ -12,11 +12,11 @@ interface NewsListViewModel  {
     val navigationManager: NavigationManager
 
 
-    fun updateTicker(symbol: String) {}
+    fun updateTicker(symbol: String)
 
-    fun getNews() {}
+    fun getNews()
 
-    fun refresh() {}
+    fun refresh()
 
-    fun loadMore() {}
+    fun loadMore()
 }

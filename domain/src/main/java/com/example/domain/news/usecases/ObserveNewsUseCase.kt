@@ -17,6 +17,7 @@ class ObserveNewsUseCase @Inject constructor(
 
     suspend fun invoke(): Flow<List<News>> {
         return symbol.flatMapLatest{
+            println("Changed observeNews")
             newsRepository.observeNews(it)
         }
     }

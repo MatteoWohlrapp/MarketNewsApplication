@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.domain.news.model.News
 import com.example.market_news_application.R
-import com.example.market_news_application.core.navigation.NavigationCommandFactory
 import com.example.market_news_application.core.ui.CircularIndeterminateProgressBar
 import com.example.market_news_application.news.viewmodel.componentscreen.NewsComponentViewModel
 

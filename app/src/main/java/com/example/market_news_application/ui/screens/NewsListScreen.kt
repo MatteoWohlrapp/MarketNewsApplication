@@ -39,7 +39,7 @@ import coil.compose.rememberImagePainter
 import com.example.data.news.DateUtil
 import com.example.domain.news.model.News
 import com.example.market_news_application.R
-import com.example.market_news_application.core.navigation.NavigationCommandFactory
+import com.example.market_news_application.core.navigation.NavigationCommandImpl
 import com.example.market_news_application.core.ui.CircularIndeterminateProgressBar
 import com.example.market_news_application.news.viewmodel.listscreen.NewsListViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -191,9 +191,7 @@ fun NewsComponent(news: News, newsListViewModel: NewsListViewModel) {
             .fillMaxWidth()
             .clickable {
                 newsListViewModel.navigationManager.navigateUrl(
-                    NavigationCommandFactory.provideToNewsComponentNavigation(
-                        news.id.toString()
-                    )
+                    NavigationCommandImpl.toNewsComponentNavigation.destinationWithArguments(news.id.toString())
                 )
             },
         elevation = 2.dp,
@@ -222,7 +220,7 @@ fun NewsComponent(news: News, newsListViewModel: NewsListViewModel) {
 
 @Composable
 fun NewsListImage(url: String) {
-    if(url != "") {
+    if (url != "") {
         Image(
             painter = rememberImagePainter(url),
             contentDescription = null,

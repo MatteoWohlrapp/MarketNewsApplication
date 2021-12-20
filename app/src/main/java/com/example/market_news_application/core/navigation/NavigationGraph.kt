@@ -19,20 +19,20 @@ fun NavigationGraph(navController: NavHostController) {
     // TODO: make use of factory in different way -> redundant calls
     NavHost(
         navController = navController,
-        startDestination = NavigationCommandFactory.provideToNewsListNavigation().destination
+        startDestination = NavigationCommandImpl.toNewsListNavigation.destination
     ) {
-        composable(NavigationCommandFactory.provideToNewsListNavigation().destination) {
+        composable(NavigationCommandImpl.toNewsListNavigation.destination) {
             val newsListViewModel: NewsListViewModelImpl = hiltViewModel()
             newsListViewModel.getNews()
             NewsListScreen(newsListViewModel)
         }
         composable(
-            NavigationCommandFactory.provideToNewsComponentNavigation("{id}").destination,
-            arguments = NavigationCommandFactory.provideToNewsComponentNavigation("{id}").arguments
+            NavigationCommandImpl.toNewsComponentNavigation.destination,
+            arguments = NavigationCommandImpl.toNewsComponentNavigation.arguments
         ) {
             val newsComponentViewModel: NewsComponentViewModelImpl = hiltViewModel()
             val id =
-                it.arguments?.getString(NavigationCommandFactory.provideToNewsComponentNavigation("{id}").arguments[0].name)
+                it.arguments?.getString(NavigationCommandImpl.toNewsComponentNavigation.arguments[0].name)
             if (id != null)
                 NewsComponentScreen(Integer.valueOf(id), newsComponentViewModel)
         }

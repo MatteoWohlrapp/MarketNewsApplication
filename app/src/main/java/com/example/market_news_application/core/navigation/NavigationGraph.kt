@@ -14,7 +14,8 @@ import com.example.market_news_application.ui.screens.NewsListScreen
 
 
 @Composable
-fun SetupNavGraph(navController: NavHostController) {
+fun NavigationGraph(navController: NavHostController) {
+    // TODO: make use of factory in different way -> redundant calls
     NavHost(
         navController = navController,
         startDestination = NavigationCommandFactory.provideToNewsListNavigation().destination
@@ -22,17 +23,17 @@ fun SetupNavGraph(navController: NavHostController) {
         composable(NavigationCommandFactory.provideToNewsListNavigation().destination) {
             val newsListViewModel: NewsListViewModelImpl = hiltViewModel()
             newsListViewModel.getNews()
-            NewsListScreen(newsListViewModel).show()
+            NewsListScreen(newsListViewModel)
         }
         composable(
             NavigationCommandFactory.provideToNewsComponentNavigation("{id}").destination,
             arguments = NavigationCommandFactory.provideToNewsComponentNavigation("{id}").arguments
         ) {
             val newsComponentViewModel: NewsComponentViewModelImpl = hiltViewModel()
-            val id = it.arguments?.getString(NavigationCommandFactory.provideToNewsComponentNavigation("{id}").arguments[0].name)
+            val id =
+                it.arguments?.getString(NavigationCommandFactory.provideToNewsComponentNavigation("{id}").arguments[0].name)
             if (id != null)
-                NewsComponentScreen(newsComponentViewModel).show(id = Integer.valueOf(id))
-
+                NewsComponentScreen(Integer.valueOf(id), newsComponentViewModel)
         }
     }
 }

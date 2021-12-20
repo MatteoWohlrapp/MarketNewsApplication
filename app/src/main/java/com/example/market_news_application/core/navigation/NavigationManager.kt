@@ -5,13 +5,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 class NavigationManager {
     var navigationState: MutableStateFlow<NavigationState> = MutableStateFlow(NavigationState())
 
-    fun navigateUrl(navigationCommand: NavigationCommand) {
+    fun navigateUrl(navigationRoute: String) {
         navigationState.value = NavigationState(
-            navigationCommand, false
+            navigationRoute, false
         )
     }
 
-    fun popBackStack(popBack: Boolean) {
-        navigationState.value = NavigationState(null, popBack )
+    fun popBackStack() {
+        navigationState.value = NavigationState("", true )
     }
 }

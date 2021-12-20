@@ -1,6 +1,6 @@
 package com.example.market_news_application.core.navigation
 
 data class NavigationState(
-    val navigationCommand: NavigationCommand? = NavigationCommandImpl.toNewsListNavigation,
+    val navigationRoute: String = NavigationRoute.NewsList.route,
     val popBack: Boolean = false
 )

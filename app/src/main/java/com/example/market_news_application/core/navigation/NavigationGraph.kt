@@ -5,6 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.market_news_application.news.viewmodel.componentscreen.NewsComponentViewModelImpl
 import com.example.market_news_application.news.viewmodel.listscreen.NewsListViewModelImpl
 import com.example.market_news_application.ui.screens.NewsComponentScreen
@@ -14,18 +15,18 @@ import com.example.market_news_application.ui.screens.NewsListScreen
 @Composable
 fun NavigationGraph() {
 
-    val appState = rememberNewsAppState()
+    val navController = rememberNavController()
 
     NavHost(
-        navController = appState.navController,
+        navController = navController,
         startDestination = Screen.NewsList.route
     ) {
-        composable(Screen.NewsList.route) { backStack ->
+        composable(Screen.NewsList.route) {
             val newsListViewModel: NewsListViewModelImpl = hiltViewModel()
             newsListViewModel.getNews()
             NewsListScreen(newsListViewModel,
                 onNewsComponentClick = { id ->
-                    appState.navigateToNewsComponent(id, backStack)
+                    navController.navigate(Screen.NewsComponent.provideIdRoute(id))
                 })
         }
         composable(
@@ -39,7 +40,7 @@ fun NavigationGraph() {
                 NewsComponentScreen(
                     Integer.valueOf(id),
                     newsComponentViewModel,
-                    onBackPressed = { appState.navigateBack() })
+                    onBackPressed = { navController.popBackStack() })
         }
     }
 }

@@ -22,6 +22,7 @@ import com.example.domain.news.model.News
 import com.example.market_news_application.R
 import com.example.market_news_application.core.ui.CircularIndeterminateProgressBar
 import com.example.market_news_application.news.viewmodel.componentscreen.NewsComponentViewModel
+import dagger.hilt.android.EntryPointAccessors
 
 
 class NewsComponentScreen(

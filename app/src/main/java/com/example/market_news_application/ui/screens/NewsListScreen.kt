@@ -1,6 +1,5 @@
 package com.example.market_news_application.ui.screens
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -33,14 +32,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.data.news.DateUtil
 import com.example.domain.news.model.News
 import com.example.market_news_application.R
-import com.example.market_news_application.core.navigation.NavigationRoute
+import com.example.market_news_application.core.navigation.Screen
 import com.example.market_news_application.core.ui.CircularIndeterminateProgressBar
 import com.example.market_news_application.news.viewmodel.listscreen.NewsListViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -189,7 +187,7 @@ class NewsListScreen(private val newsListViewModel: NewsListViewModel) {
                 .fillMaxWidth()
                 .clickable {
                     newsListViewModel.navigationManager.navigateUrl(
-                        NavigationRoute.NewsComponent.passId(news.id.toString())
+                        Screen.NewsComponent.passId(news.id.toString())
                     )
                 },
             elevation = 2.dp,

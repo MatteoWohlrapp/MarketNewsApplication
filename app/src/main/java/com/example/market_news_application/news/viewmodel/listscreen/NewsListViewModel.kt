@@ -9,8 +9,6 @@ interface NewsListViewModel  {
     val news : MutableLiveData<List<News>>
     val isLoading : MutableLiveData<Boolean>
     val symbol : String
-    val navigationManager: NavigationManager
-
 
     fun updateTicker(symbol: String)
 

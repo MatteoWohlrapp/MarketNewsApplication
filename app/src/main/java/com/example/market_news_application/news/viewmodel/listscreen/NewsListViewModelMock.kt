@@ -14,28 +14,23 @@ import kotlinx.coroutines.withContext
 
 class NewsListViewModelMock: NewsListViewModel {
     override val news: MutableLiveData<List<News>>
-        get() = TODO("Not yet implemented")
+        get() = MutableLiveData(listOf())
     override val isLoading: MutableLiveData<Boolean>
-        get() = TODO("Not yet implemented")
+        get() = MutableLiveData(false)
     override val symbol: String
-        get() = TODO("Not yet implemented")
-    override val navigationManager: NavigationManager
-        get() = TODO("Not yet implemented")
+        get() = "AAPL"
 
     override fun updateTicker(symbol: String) {
-        TODO("Not yet implemented")
     }
 
     override fun getNews() {
-        TODO("Not yet implemented")
+        news.postValue(NewsListViewModelMockData.getNews().value)
     }
 
     override fun refresh() {
-        TODO("Not yet implemented")
     }
 
     override fun loadMore() {
-        TODO("Not yet implemented")
     }
 
 }

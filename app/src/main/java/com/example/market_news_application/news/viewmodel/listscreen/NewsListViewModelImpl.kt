@@ -20,8 +20,7 @@ class NewsListViewModelImpl @Inject constructor(
     private val observeNewsUseCase: ObserveNewsUseCase,
     private val refreshNewsUseCase: RefreshNewsUseCase,
     private val loadMoreNewsUseCase: LoadMoreNewsUseCase,
-    override val navigationManager: NavigationManager
-) : NewsListViewModel, ViewModel() {
+    ) : NewsListViewModel, ViewModel() {
 
     override val news = MutableLiveData<List<News>>(listOf())
     override val isLoading = MutableLiveData(false)

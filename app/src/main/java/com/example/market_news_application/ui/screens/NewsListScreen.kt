@@ -39,9 +39,11 @@ import com.example.data.news.DateUtil
 import com.example.domain.news.model.News
 import com.example.market_news_application.R
 import com.example.market_news_application.core.navigation.NavigationManager
+import com.example.market_news_application.core.navigation.NavigationManagerMock
 import com.example.market_news_application.core.navigation.Screen
 import com.example.market_news_application.core.ui.CircularIndeterminateProgressBar
 import com.example.market_news_application.news.viewmodel.listscreen.NewsListViewModel
+import com.example.market_news_application.news.viewmodel.listscreen.NewsListViewModelMock
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.CoroutineScope
@@ -67,7 +69,11 @@ fun NewsListScreen(newsListViewModel: NewsListViewModel, navigationManager: Navi
         }) {
         Column {
             // search bar
-            SearchBar(scope = scope, scrollState = scrollState, newsListViewModel = newsListViewModel)
+            SearchBar(
+                scope = scope,
+                scrollState = scrollState,
+                newsListViewModel = newsListViewModel
+            )
 
             // list of news
             NewsList(
@@ -256,5 +262,9 @@ fun NewsListProgressBar(newsListViewModel: NewsListViewModel) {
 
 @Preview(showBackground = true)
 @Composable
-fun NewsPreview() {
+fun NewsListPreview() {
+    NewsListScreen(
+        newsListViewModel = NewsListViewModelMock(),
+        navigationManager = NavigationManagerMock()
+    )
 }

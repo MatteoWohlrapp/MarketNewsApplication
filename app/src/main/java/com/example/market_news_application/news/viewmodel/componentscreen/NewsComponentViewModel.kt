@@ -14,7 +14,6 @@ interface NewsComponentViewModel {
 
     val news : MutableLiveData<News>
     val isLoading : MutableLiveData<Boolean>
-    val navigationManager: NavigationManager
 
     fun getNews(id: Int)
 

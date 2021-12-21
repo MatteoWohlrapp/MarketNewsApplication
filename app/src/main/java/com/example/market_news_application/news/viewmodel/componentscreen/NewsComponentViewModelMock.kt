@@ -10,24 +10,15 @@ import com.example.market_news_application.news.viewmodel.ViewModelUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-@HiltViewModel
-class NewsComponentViewModelImpl @Inject constructor(
-    private val getNewsByIdUseCase: GetNewsByIdUseCase,
-) : NewsComponentViewModel, ViewModel() {
+class NewsComponentViewModelMock : NewsComponentViewModel {
 
     override val news = MutableLiveData(News())
     override val isLoading = MutableLiveData(false)
 
 
     override fun getNews(id: Int) {
-        ViewModelUtil.suspendFunction(viewModelScope) {
-            isLoading.postValue(true)
-            news.postValue(getNewsByIdUseCase.invoke(id))
-            isLoading.postValue(false)
-        }
     }
 
     override fun clearNews() {
-        news.postValue(News())
     }
 }

@@ -12,15 +12,19 @@ import com.example.market_news_application.ui.screens.NewsListScreen
 
 
 @Composable
-fun NavigationGraph(navController: NavHostController) {
+fun NavigationGraph(navController: NavHostController, navigationManager: NavigationManager) {
     NavHost(
         navController = navController,
         startDestination = Screen.NewsList.route
     ) {
         composable(Screen.NewsList.route) {
+            // viewModel scoped to destination NewsListScreen in this case
             val newsListViewModel: NewsListViewModelImpl = hiltViewModel()
             newsListViewModel.getNews()
-            NewsListScreen(newsListViewModel).show()
+            NewsListScreen(
+                newsListViewModel = newsListViewModel,
+                navigationManager = navigationManager
+            )
         }
         composable(
             Screen.NewsComponent.route,
@@ -30,7 +34,11 @@ fun NavigationGraph(navController: NavHostController) {
             val id =
                 it.arguments?.getString(Screen.NewsComponent.navArguments[0].name)
             if (id != null)
-                NewsComponentScreen(Integer.valueOf(id), newsComponentViewModel).show()
+                NewsComponentScreen(
+                    id = Integer.valueOf(id),
+                    newsComponentViewModel = newsComponentViewModel,
+                    navigationManager = navigationManager
+                )
         }
     }
 }

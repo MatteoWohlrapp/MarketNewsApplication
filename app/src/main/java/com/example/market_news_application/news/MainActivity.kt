@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
 
-            NewsApp(navController)
+            NewsApp(navController, navigationManager)
         }
 
     }

@@ -12,15 +12,21 @@ import com.example.market_news_application.ui.screens.NewsListScreen
 
 
 @Composable
-fun NavigationGraph(navController: NavHostController) {
+fun NavigationGraph() {
+
+    val appState = rememberNewsAppState()
+
     NavHost(
-        navController = navController,
+        navController = appState.navController,
         startDestination = Screen.NewsList.route
     ) {
-        composable(Screen.NewsList.route) {
+        composable(Screen.NewsList.route) { backStack ->
             val newsListViewModel: NewsListViewModelImpl = hiltViewModel()
             newsListViewModel.getNews()
-            NewsListScreen(newsListViewModel).show()
+            NewsListScreen(newsListViewModel,
+                onNewsComponentClick = { id ->
+                    appState.navigateToNewsComponent(id, backStack)
+                })
         }
         composable(
             Screen.NewsComponent.route,
@@ -30,7 +36,10 @@ fun NavigationGraph(navController: NavHostController) {
             val id =
                 it.arguments?.getString(Screen.NewsComponent.navArguments[0].name)
             if (id != null)
-                NewsComponentScreen(Integer.valueOf(id), newsComponentViewModel).show()
+                NewsComponentScreen(
+                    Integer.valueOf(id),
+                    newsComponentViewModel,
+                    onBackPressed = { appState.navigateBack() })
         }
     }
 }

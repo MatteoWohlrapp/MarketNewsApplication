@@ -12,7 +12,7 @@ sealed class Screen(val route: String, val navArguments: List<NamedNavArgument>)
 
     object NewsComponent : Screen(route = "news/{$ID_ARGUMENT_KEY}", navArguments = listOf(
         navArgument("id") { type = NavType.StringType })){
-        fun passId(id: String) : String {
+        fun provideIdRoute(id: String) : String {
             return this.route.replace(oldValue = "{$ID_ARGUMENT_KEY}", newValue = "$id")
         }
     }

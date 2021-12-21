@@ -47,204 +47,213 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.util.*
 
-class NewsListScreen(private val newsListViewModel: NewsListViewModel) {
-    @Composable
-    fun show() {
+@Composable
+fun NewsListScreen(newsListViewModel: NewsListViewModel, onNewsComponentClick: (String) -> Unit) {
 
-        val scrollState = rememberLazyListState()
-        val scope = rememberCoroutineScope()
-        val showScrollToTopButton = scrollState.firstVisibleItemIndex > 0
+    val scrollState = rememberLazyListState()
+    val scope = rememberCoroutineScope()
+    val showScrollToTopButton = scrollState.firstVisibleItemIndex > 0
 
-        Scaffold(
-            floatingActionButtonPosition = FabPosition.End,
-            floatingActionButton = {
-                // button to scroll to the top
-                ScrollToTopButton(
-                    showButton = showScrollToTopButton,
-                    scope = scope,
-                    scrollState = scrollState
-                )
-            }) {
-            Column {
-                // search bar
-                SearchBar(scope, scrollState)
+    Scaffold(
+        floatingActionButtonPosition = FabPosition.End,
+        floatingActionButton = {
+            // button to scroll to the top
+            ScrollToTopButton(
+                showButton = showScrollToTopButton,
+                scope = scope,
+                scrollState = scrollState
+            )
+        }) {
+        Column {
+            // search bar
+            SearchBar(
+                scope = scope,
+                scrollState = scrollState,
+                newsListViewModel = newsListViewModel
+            )
 
-                // list of news
-                NewsList(
-                    scrollState = scrollState,
-                )
-            }
-
-            // progress bar
-            NewsListProgressBar()
+            // list of news
+            NewsList(
+                scrollState = scrollState,
+                newsListViewModel = newsListViewModel,
+                onNewsComponentClick = onNewsComponentClick
+            )
         }
 
+        // progress bar
+        NewsListProgressBar(newsListViewModel = newsListViewModel)
     }
 
-    @Composable
-    fun ScrollToTopButton(showButton: Boolean, scope: CoroutineScope, scrollState: LazyListState) {
-        AnimatedVisibility(
-            visible = showButton,
-            enter = fadeIn(),
-            exit = fadeOut(),
-        ) {
-            FloatingActionButton(
-                onClick = { scope.launch { scrollState.animateScrollToItem(0) } },
-                backgroundColor = Color.White,
-                contentColor = Color.Black,
-                shape = CircleShape
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.ExpandLess,
-                    contentDescription = "Scroll up"
-                )
-            }
-        }
-    }
+}
 
-    @Composable
-    fun SearchBar(scope: CoroutineScope, scrollState: LazyListState) {
-
-        Surface(
-            modifier = Modifier.fillMaxWidth(),
-            color = MaterialTheme.colors.primary,
-            elevation = 8.dp
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                var searchFieldText by rememberSaveable { mutableStateOf("AAPL") }
-                val keyboardController = LocalFocusManager.current
-
-                TextField(
-                    modifier = Modifier
-                        .fillMaxWidth(.9f)
-                        .padding(8.dp),
-                    value = searchFieldText,
-                    onValueChange = { searchFieldText = it },
-                    label = { Text("Search ticker") },
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Filled.Search,
-                            contentDescription = "Search icon"
-                        )
-                    },
-                    textStyle = TextStyle(color = Color.Black),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Text,
-                        imeAction = ImeAction.Done
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            keyboardController.clearFocus()
-                            newsListViewModel.updateTicker(searchFieldText.uppercase(Locale.getDefault()))
-                            scope.launch { scrollState.animateScrollToItem(0) }
-                        }
-                    )
-                )
-            }
-        }
-    }
-
-    @Composable
-    fun NewsList(
-        scrollState: LazyListState,
+@Composable
+fun ScrollToTopButton(showButton: Boolean, scope: CoroutineScope, scrollState: LazyListState) {
+    AnimatedVisibility(
+        visible = showButton,
+        enter = fadeIn(),
+        exit = fadeOut(),
     ) {
-        val news: List<News> by newsListViewModel.news.observeAsState(initial = listOf())
-
-        SwipeRefresh(
-            state = rememberSwipeRefreshState(false),
-            onRefresh = { newsListViewModel.refresh() },
-            indicator = { _, _ -> }) {
-
-
-            LazyColumn(
-                contentPadding = PaddingValues(bottom = 80.dp),
-                state = scrollState,
-                modifier = Modifier.fillMaxSize()
-            ) {
-                items(
-                    items = news,
-                    itemContent = {
-                        NewsComponent(news = it)
-                    })
-            }
-
-            // act when end of list reached
-            LaunchedEffect(ViewUtil.isScrolledToEnd(scrollState)) {
-                newsListViewModel.loadMore()
-            }
-        }
-    }
-
-    @Composable
-    fun NewsComponent(news: News) {
-        Card(
-            modifier = Modifier
-                .padding(horizontal = 8.dp, vertical = 8.dp)
-                .fillMaxWidth()
-                .clickable {
-                    newsListViewModel.navigationManager.navigateUrl(
-                        Screen.NewsComponent.passId(news.id.toString())
-                    )
-                },
-            elevation = 2.dp,
+        FloatingActionButton(
+            onClick = { scope.launch { scrollState.animateScrollToItem(0) } },
             backgroundColor = Color.White,
-            shape = RoundedCornerShape(corner = CornerSize(16.dp))
-
+            contentColor = Color.Black,
+            shape = CircleShape
         ) {
-            Row {
-                NewsListImage(url = news.image)
-                Column(
-                    modifier = Modifier
-                        .padding(32.dp)
-                        .fillMaxWidth()
-                        .align(Alignment.CenterVertically)
-                ) {
-                    Text(text = news.headline, style = MaterialTheme.typography.h6)
-                    Text(
-                        text = DateUtil.mapTimestampToDate(news.datetime),
-                        style = MaterialTheme.typography.subtitle1
-                    )
-
-                }
-            }
-        }
-    }
-
-    @Composable
-    fun NewsListImage(url: String) {
-        if (url != "") {
-            Image(
-                painter = rememberImagePainter(url),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .padding(8.dp)
-                    .size(120.dp)
-                    .clip(RoundedCornerShape(corner = CornerSize(16.dp)))
-            )
-        } else {
-            Image(
-                painter = painterResource(id = R.drawable.breaking_news),
-                contentDescription = null,
-                contentScale = ContentScale.FillWidth,
-                modifier = Modifier
-                    .padding(8.dp)
-                    .size(120.dp)
-                    .clip(RoundedCornerShape(corner = CornerSize(16.dp)))
+            Icon(
+                imageVector = Icons.Filled.ExpandLess,
+                contentDescription = "Scroll up"
             )
         }
-    }
-
-    @Composable
-    fun NewsListProgressBar() {
-        val loadingIndicator = newsListViewModel.isLoading.observeAsState(initial = false)
-        CircularIndeterminateProgressBar(isLoading = loadingIndicator.value)
     }
 }
+
+@Composable
+fun SearchBar(
+    scope: CoroutineScope,
+    scrollState: LazyListState,
+    newsListViewModel: NewsListViewModel
+) {
+
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        color = MaterialTheme.colors.primary,
+        elevation = 8.dp
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            var searchFieldText by rememberSaveable { mutableStateOf("AAPL") }
+            val keyboardController = LocalFocusManager.current
+
+            TextField(
+                modifier = Modifier
+                    .fillMaxWidth(.9f)
+                    .padding(8.dp),
+                value = searchFieldText,
+                onValueChange = { searchFieldText = it },
+                label = { Text("Search ticker") },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Filled.Search,
+                        contentDescription = "Search icon"
+                    )
+                },
+                textStyle = TextStyle(color = Color.Black),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Done
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        keyboardController.clearFocus()
+                        newsListViewModel.updateTicker(searchFieldText.uppercase(Locale.getDefault()))
+                        scope.launch { scrollState.animateScrollToItem(0) }
+                    }
+                )
+            )
+        }
+    }
+}
+
+@Composable
+fun NewsList(
+    scrollState: LazyListState,
+    newsListViewModel: NewsListViewModel,
+    onNewsComponentClick: (String) -> Unit
+) {
+    val news: List<News> by newsListViewModel.news.observeAsState(initial = listOf())
+
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(false),
+        onRefresh = { newsListViewModel.refresh() },
+        indicator = { _, _ -> }) {
+
+
+        LazyColumn(
+            contentPadding = PaddingValues(bottom = 80.dp),
+            state = scrollState,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            items(
+                items = news,
+                itemContent = {
+                    NewsComponent(news = it, onNewsComponentClick = onNewsComponentClick)
+                })
+        }
+
+        // act when end of list reached
+        LaunchedEffect(ViewUtil.isScrolledToEnd(scrollState)) {
+            newsListViewModel.loadMore()
+        }
+    }
+}
+
+@Composable
+fun NewsComponent(news: News, onNewsComponentClick: (String) -> Unit) {
+    Card(
+        modifier = Modifier
+            .padding(horizontal = 8.dp, vertical = 8.dp)
+            .fillMaxWidth()
+            .clickable {
+                onNewsComponentClick.invoke(news.id.toString())
+            },
+        elevation = 2.dp,
+        backgroundColor = Color.White,
+        shape = RoundedCornerShape(corner = CornerSize(16.dp))
+
+    ) {
+        Row {
+            NewsListImage(url = news.image)
+            Column(
+                modifier = Modifier
+                    .padding(32.dp)
+                    .fillMaxWidth()
+                    .align(Alignment.CenterVertically)
+            ) {
+                Text(text = news.headline, style = MaterialTheme.typography.h6)
+                Text(
+                    text = DateUtil.mapTimestampToDate(news.datetime),
+                    style = MaterialTheme.typography.subtitle1
+                )
+
+            }
+        }
+    }
+}
+
+@Composable
+fun NewsListImage(url: String) {
+    if (url != "") {
+        Image(
+            painter = rememberImagePainter(url),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .padding(8.dp)
+                .size(120.dp)
+                .clip(RoundedCornerShape(corner = CornerSize(16.dp)))
+        )
+    } else {
+        Image(
+            painter = painterResource(id = R.drawable.breaking_news),
+            contentDescription = null,
+            contentScale = ContentScale.FillWidth,
+            modifier = Modifier
+                .padding(8.dp)
+                .size(120.dp)
+                .clip(RoundedCornerShape(corner = CornerSize(16.dp)))
+        )
+    }
+}
+
+@Composable
+fun NewsListProgressBar(newsListViewModel: NewsListViewModel) {
+    val loadingIndicator = newsListViewModel.isLoading.observeAsState(initial = false)
+    CircularIndeterminateProgressBar(isLoading = loadingIndicator.value)
+}
+
 
 @Preview(showBackground = true)
 @Composable

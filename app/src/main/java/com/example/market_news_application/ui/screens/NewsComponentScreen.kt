@@ -25,83 +25,82 @@ import com.example.market_news_application.news.viewmodel.componentscreen.NewsCo
 import dagger.hilt.android.EntryPointAccessors
 
 
-class NewsComponentScreen(
-    val id: Int,
-    private val newsComponentViewModel: NewsComponentViewModel
+@Composable
+fun NewsComponentScreen(
+    id: Int,
+    newsComponentViewModel: NewsComponentViewModel,
+    onBackPressed : () -> Unit
 ) {
-    @Composable
-    fun show() {
-        val news: News by newsComponentViewModel.news.observeAsState(initial = News())
-        newsComponentViewModel.getNews(id)
+    val news: News by newsComponentViewModel.news.observeAsState(initial = News())
+    newsComponentViewModel.getNews(id)
 
-        Column {
-            NewsComponentImage(url = news.image)
-            Text(
-                news.headline,
-                Modifier.padding(16.dp),
-                style = MaterialTheme.typography.h6
-            )
-            Text(
-                news.summary,
-                Modifier.padding(16.dp),
-                style = MaterialTheme.typography.body1
-            )
-        }
-        // button to return
-        BackButton()
-        // progress bar
-        NewsComponentProgressBar()
+    Column {
+        NewsComponentImage(url = news.image)
+        Text(
+            news.headline,
+            Modifier.padding(16.dp),
+            style = MaterialTheme.typography.h6
+        )
+        Text(
+            news.summary,
+            Modifier.padding(16.dp),
+            style = MaterialTheme.typography.body1
+        )
     }
+    // button to return
+    BackButton(onBackPressed = onBackPressed)
+    // progress bar
+    NewsComponentProgressBar(newsComponentViewModel = newsComponentViewModel)
+}
 
 
-    @Composable
-    fun NewsComponentImage(url: String) {
-        if (url != "") {
-            Image(
-                painter = rememberImagePainter(url),
-                contentDescription = null,
-                contentScale = ContentScale.FillWidth,
-                modifier = Modifier
-                    .padding(8.dp)
-                    .clip(RoundedCornerShape(corner = CornerSize(16.dp)))
-            )
-        } else {
-            Image(
-                painter = painterResource(id = R.drawable.breaking_news),
-                contentDescription = null,
-                contentScale = ContentScale.FillWidth,
-                modifier = Modifier
-                    .padding(8.dp)
-                    .size(120.dp)
-                    .clip(RoundedCornerShape(corner = CornerSize(16.dp)))
-            )
-        }
+@Composable
+fun NewsComponentImage(url: String) {
+    if (url != "") {
+        Image(
+            painter = rememberImagePainter(url),
+            contentDescription = null,
+            contentScale = ContentScale.FillWidth,
+            modifier = Modifier
+                .padding(8.dp)
+                .clip(RoundedCornerShape(corner = CornerSize(16.dp)))
+        )
+    } else {
+        Image(
+            painter = painterResource(id = R.drawable.breaking_news),
+            contentDescription = null,
+            contentScale = ContentScale.FillWidth,
+            modifier = Modifier
+                .padding(8.dp)
+                .size(120.dp)
+                .clip(RoundedCornerShape(corner = CornerSize(16.dp)))
+        )
     }
+}
 
-    @Composable
-    fun BackButton() {
+@Composable
+fun BackButton(onBackPressed: () -> Unit) {
 
-        FloatingActionButton(
-            onClick = {
-                newsComponentViewModel.navigationManager.popBackStack()
-            },
-            backgroundColor = Color.White,
-            contentColor = Color.Black,
-            shape = CircleShape,
-            modifier = Modifier.padding(8.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Filled.ArrowBack,
-                contentDescription = "Go Back"
-            )
-        }
-
-    }
-
-    @Composable
-    fun NewsComponentProgressBar() {
-        val loadingIndicator = newsComponentViewModel.isLoading.observeAsState(initial = false)
-        CircularIndeterminateProgressBar(isLoading = loadingIndicator.value)
+    FloatingActionButton(
+        onClick = {
+            onBackPressed.invoke()
+        },
+        backgroundColor = Color.White,
+        contentColor = Color.Black,
+        shape = CircleShape,
+        modifier = Modifier.padding(8.dp)
+    ) {
+        Icon(
+            imageVector = Icons.Filled.ArrowBack,
+            contentDescription = "Go Back"
+        )
     }
 
 }
+
+@Composable
+fun NewsComponentProgressBar(newsComponentViewModel: NewsComponentViewModel) {
+    val loadingIndicator = newsComponentViewModel.isLoading.observeAsState(initial = false)
+    CircularIndeterminateProgressBar(isLoading = loadingIndicator.value)
+}
+
